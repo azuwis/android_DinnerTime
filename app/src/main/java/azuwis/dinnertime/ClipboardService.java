@@ -49,7 +49,7 @@ public class ClipboardService extends Service {
                     if (chars != null ) {
                         String string = chars.toString();
                         if (string.startsWith("http://numenplus.yixin.im/singleNewsWap.do?")) {
-                            Log.d(TAG, string);
+                            // Log.d(TAG, string);
                             saveId(string);
                         }
                     }
@@ -65,9 +65,12 @@ public class ClipboardService extends Service {
 
             Context context = getApplicationContext();
 
+            Calendar calendar = Calendar.getInstance();
+
             SharedPreferences sharedPref = context.getSharedPreferences("material_id", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("offset", material_id_int - Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+            editor.putInt("offset", material_id_int - calendar.get(Calendar.DAY_OF_WEEK));
+            editor.putInt("week_of_year", calendar.get(Calendar.WEEK_OF_YEAR));
             editor.commit();
 
             Toast toast = Toast.makeText(context, material_id_string, Toast.LENGTH_LONG);
