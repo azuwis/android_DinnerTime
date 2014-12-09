@@ -5,10 +5,13 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class ClipboardService extends Service {
     private static final String TAG = "ClipboardService";
@@ -56,10 +59,18 @@ public class ClipboardService extends Service {
     private void saveId(String url_string) {
         Uri uri = Uri.parse(url_string);
         if (uri.getQueryParameter("companyId").equals("1")) {
-            String materialId;
-            materialId = uri.getQueryParameter("materialId");
+            String material_id_string;
+            material_id_string = uri.getQueryParameter("materialId");
+            int material_id_int = Integer.parseInt(material_id_string);
+
             Context context = getApplicationContext();
-            Toast toast = Toast.makeText(context, materialId, Toast.LENGTH_LONG);
+
+            SharedPreferences sharedPref = context.getSharedPreferences("material_id", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("offset", material_id_int - Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+            editor.commit();
+
+            Toast toast = Toast.makeText(context, material_id_string, Toast.LENGTH_LONG);
             toast.show();
         }
     }
