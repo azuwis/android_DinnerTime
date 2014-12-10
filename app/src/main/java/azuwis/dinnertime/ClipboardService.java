@@ -67,10 +67,11 @@ public class ClipboardService extends Service {
 
             Calendar calendar = Calendar.getInstance();
 
-            SharedPreferences sharedPref = context.getSharedPreferences("material_id", Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = context.getSharedPreferences("update", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putInt("offset", material_id_int - calendar.get(Calendar.DAY_OF_WEEK));
             editor.putInt("week_of_year", calendar.get(Calendar.WEEK_OF_YEAR));
+            editor.putString("url", url_string.replace("materialId=" + material_id_string, "materialId=%s"));
             editor.commit();
 
             Toast toast = Toast.makeText(context, material_id_string, Toast.LENGTH_LONG);
