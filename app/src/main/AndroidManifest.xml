@@ -33,6 +33,10 @@
         <receiver android:name=".AlarmReceiver" >
         </receiver>
 
+        <service
+            android:name=".SchedulingService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>
