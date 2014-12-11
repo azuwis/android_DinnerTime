@@ -91,10 +91,10 @@ public class SchedulingService extends IntentService {
 
     private void handleActionUpdate(String param1, String param2) {
         Calendar calendar = Calendar.getInstance();
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("update", Context.MODE_PRIVATE);
-        int offset = sharedPref.getInt("offset", 0);
+        SharedPreferences savedUpdate = getApplicationContext().getSharedPreferences("update", Context.MODE_PRIVATE);
+        int offset = savedUpdate.getInt("offset", 0);
         offset += calendar.get(Calendar.DAY_OF_WEEK);
-        String url = sharedPref.getString("url", null);
+        String url = savedUpdate.getString("url", null);
         if (url != null) {
             url = url.replace("materialId=%s", "materialId=" + offset);
             Document doc;
@@ -115,7 +115,13 @@ public class SchedulingService extends IntentService {
                     stringBuilder.append(text).append("\n");
                 }
             }
-            sendNotification(stringBuilder.toString());
+            String menu = stringBuilder.toString();
+            SharedPreferences savedMenu = getApplicationContext().getSharedPreferences("menu", Context.MODE_PRIVATE);
+            SharedPreferences.Editor savedMenuEditor = savedMenu.edit();
+            savedMenuEditor.putInt("day", calendar.get(Calendar.DAY_OF_YEAR));
+            savedMenuEditor.putString("menu", menu);
+            savedMenuEditor.commit();
+            //sendNotification(menu);
         }
     }
 
