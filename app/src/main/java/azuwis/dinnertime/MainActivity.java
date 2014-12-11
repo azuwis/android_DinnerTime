@@ -1,6 +1,7 @@
 package azuwis.dinnertime;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,11 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        startService(new Intent(this, ClipboardService.class));
+        new AlarmReceiver().setAlarm(this);
+        SchedulingService schedulingService = new SchedulingService();
+        schedulingService.startActionUpdate(this, null, null);
     }
 
     @Override
