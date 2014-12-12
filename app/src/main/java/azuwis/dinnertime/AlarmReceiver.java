@@ -17,6 +17,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent service = new Intent(context, SchedulingService.class);
+        service.setAction(SchedulingService.ACTION_UPDATE);
         startWakefulService(context, service);
     }
 

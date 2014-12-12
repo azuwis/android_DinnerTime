@@ -24,8 +24,8 @@ public class SchedulingService extends IntentService {
 
     public static final int NOTIFICATION_ID = 1;
 
-    private static final String ACTION_CHECK = "azuwis.dinnertime.action.CHECK";
-    private static final String ACTION_UPDATE = "azuwis.dinnertime.action.UPDATE";
+    public static final String ACTION_CHECK = "azuwis.dinnertime.action.CHECK";
+    public static final String ACTION_UPDATE = "azuwis.dinnertime.action.UPDATE";
 
     // TODO: Rename parameters
     private static final String EXTRA_PARAM1 = "azuwis.dinnertime.extra.PARAM1";
