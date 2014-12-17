@@ -95,8 +95,16 @@ public class SchedulingService extends IntentService {
             url = url.replace("materialId=%s", "materialId=" + offset);
             DinnerMenu dinnerMenu = new DinnerMenu(getApplicationContext(), url);
             String currentMenu = dinnerMenu.getCurrentMenu();
-            if (dinnerMenu.getStatus() == DinnerMenu.STATUS_SUCCESS) {
-                sendNotification(currentMenu);
+            switch (dinnerMenu.getStatus()) {
+                case DinnerMenu.STATUS_SUCCESS:
+                    sendNotification(currentMenu);
+                    break;
+                case DinnerMenu.STATUS_NOT_TODAY:
+                    sendNotification("需要重新复制菜单地址");
+                    break;
+                case DinnerMenu.STATUS_NETWORK_ERROR:
+                    sendNotification("无法获取菜单");
+                    break;
             }
         }
     }
