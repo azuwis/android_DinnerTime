@@ -99,31 +99,11 @@ public class SchedulingService extends IntentService {
         String url = savedUpdate.getString("url", null);
         if (url != null) {
             url = url.replace("materialId=%s", "materialId=" + offset);
-            Document doc;
-            try {
-                doc = Jsoup.connect(url).get();
-            } catch (IOException e) {
-                Log.d(TAG, "Error trying to get " + url);
-                return;
+            DinnerMenu dinnerMenu = new DinnerMenu(getApplicationContext(), url);
+            String currentMenu = dinnerMenu.getCurrentMenu();
+            if (dinnerMenu.getStatus() == DinnerMenu.STATUS_SUCCESS) {
+                sendNotification(currentMenu);
             }
-            Elements elems;
-            elems = doc.select("p");
-            StringBuilder stringBuilder = new StringBuilder();
-            for (Element elem : elems) {
-                // trim does not work on &nbsp;
-                String text = elem.text().trim().replace("\u00a0","");
-                if (!text.isEmpty() && !text.matches("[\\d-]+")) {
-                    //Log.d(TAG, elem.text());
-                    stringBuilder.append(text).append("\n");
-                }
-            }
-            String menu = stringBuilder.toString();
-            SharedPreferences savedMenu = getApplicationContext().getSharedPreferences("menu", Context.MODE_PRIVATE);
-            SharedPreferences.Editor savedMenuEditor = savedMenu.edit();
-            savedMenuEditor.putInt("day", calendar.get(Calendar.DAY_OF_YEAR));
-            savedMenuEditor.putString("menu", menu);
-            savedMenuEditor.commit();
-            //sendNotification(menu);
         }
     }
 
