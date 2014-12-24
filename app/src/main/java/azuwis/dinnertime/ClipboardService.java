@@ -74,7 +74,7 @@ public class ClipboardService extends Service {
             editor.putString("url", url_string.replace("materialId=" + material_id_string, "materialId=%s"));
             editor.commit();
 
-            Toast toast = Toast.makeText(context, material_id_string, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(context, "已保存本周菜单地址", Toast.LENGTH_LONG);
             toast.show();
         }
     }
