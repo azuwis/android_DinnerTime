@@ -55,7 +55,7 @@ public class DinnerMenu {
         Elements elems;
         elems = doc.select("p");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
+        SimpleDateFormat sdf = new SimpleDateFormat("M月d日");
         String date = sdf.format(new Date());
         if (!elems.toString().contains(date)) {
             mStatus = STATUS_NOT_TODAY;
